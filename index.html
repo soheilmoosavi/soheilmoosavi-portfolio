@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soheil Moosavi — Data Platform Engineer</title>
+<meta name="description" content="Soheil Moosavi — Senior Data Platform Engineer. 10+ years of mission-critical data infrastructure: 20M+ daily transactions, 30M+ users, zero tolerance for data loss.">
+<meta property="og:title" content="Soheil Moosavi — Data Platform Engineer">
+<meta property="og:description" content="Mission-critical data infrastructure at enterprise scale. Azure · AWS · Databricks · Snowflake · Kubernetes.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<style>
+/* ════════════════ DESIGN TOKENS ════════════════ */
+:root {
+  --bg: #fafbfd;
+  --bg-soft: #f3f5f9;
+  --surface: #ffffff;
+  --ink: #0f1222;
+  --ink-soft: #4b5168;
+  --ink-mute: #8a90a6;
+  --line: rgba(15,18,34,0.07);
+  --line-strong: rgba(15,18,34,0.12);
+  --blue: #3b5bfd;
+  --blue-deep: #2742d6;
+  --blue-soft: #eef1ff;
+  --emerald: #0d9d6f;
+  --emerald-soft: #e8f7f1;
+  --violet: #7c5cff;
+  --grad-hero: linear-gradient(120deg, #3b5bfd 0%, #7c5cff 55%, #2bb8a3 110%);
+  --grad-text: linear-gradient(100deg, #2742d6, #7c5cff);
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-sm: 0 1px 2px rgba(15,18,34,0.04), 0 2px 8px rgba(15,18,34,0.04);
+  --shadow-md: 0 2px 6px rgba(15,18,34,0.04), 0 12px 32px rgba(15,18,34,0.07);
+  --shadow-lg: 0 4px 12px rgba(15,18,34,0.05), 0 24px 64px rgba(15,18,34,0.10);
+  --radius: 20px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+::selection { background: var(--blue); color:#fff; }
+
+/* ── custom cursor (desktop, fine pointers only) ── */
+@media (hover:hover) and (pointer:fine) and (min-width:992px) {
+  .cursor-dot, .cursor-ring {
+    position:fixed; top:0; left:0; pointer-events:none; z-index:99999;
+    border-radius:50%; transform:translate(-50%,-50%);
+  }
+  .cursor-dot { width:6px; height:6px; background:var(--ink); }
+  .cursor-ring {
+    width:30px; height:30px; border:1.5px solid rgba(15,18,34,0.25);
+    transition: width .3s var(--ease), height .3s var(--ease), border-color .3s, background .3s;
+  }
+  .cursor-ring.is-hover { width:56px; height:56px; border-color:var(--blue); background:rgba(59,91,253,0.06); }
+  .cursor-ring.is-dark { border-color:rgba(255,255,255,0.45); }
+}
+@media not ((hover:hover) and (pointer:fine) and (min-width:992px)) {
+  .cursor-dot, .cursor-ring { display:none; }
+}
+
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ════════════════ PROGRESS ════════════════ */
+#progress {
+  position:fixed; top:0; left:0; height:2px; width:0%;
+  background: var(--grad-hero); z-index:10000; border-radius:0 2px 2px 0;
+}
+
+/* ════════════════ LOADER ════════════════ */
+#loader {
+  position:fixed; inset:0; background:var(--bg); z-index:9990;
+  display:flex; align-items:center; justify-content:center;
+  transition: clip-path .9s var(--ease);
+  clip-path: circle(150% at 50% 50%);
+}
+#loader.done { clip-path: circle(0% at 50% 50%); pointer-events:none; }
+.loader-inner { text-align:center; }
+.loader-monogram {
+  width:76px; height:76px; border-radius:24px; margin:0 auto 26px;
+  background: var(--grad-hero);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:700; font-size:26px; color:#fff;
+  letter-spacing:-1px;
+  animation: monoPulse 1.6s var(--ease) infinite;
+  box-shadow: 0 16px 40px rgba(59,91,253,0.25);
+}
+@keyframes monoPulse { 0%,100%{transform:scale(1) rotate(0deg);} 50%{transform:scale(1.06) rotate(2deg);} }
+.loader-mark {
+  font-family:var(--font-display); font-weight:700; font-size: clamp(22px,3.4vw,34px);
+  letter-spacing:-1px; overflow:hidden; height:1.3em;
+}
+.loader-mark span { display:block; transform:translateY(110%); animation: riseUp .8s var(--ease) .15s forwards; }
+@keyframes riseUp { to { transform:translateY(0); } }
+.loader-roles {
+  margin-top:8px; font-size:13px; color:var(--ink-mute); font-weight:500;
+  overflow:hidden; height:1.6em;
+}
+.loader-roles span { display:block; transform:translateY(110%); animation: riseUp .8s var(--ease) .3s forwards; }
+.loader-track { width:180px; height:2px; background:var(--line-strong); border-radius:2px; margin:24px auto 0; overflow:hidden; }
+.loader-fill { height:100%; width:0%; background:var(--grad-hero); border-radius:2px; transition:width .2s; }
+
+/* ════════════════ BACKDROP ════════════════ */
+.bg-orbs { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.orb { position:absolute; border-radius:50%; filter:blur(90px); opacity:.55; will-change:transform; }
+.orb-1 { width:46vw; height:46vw; background:radial-gradient(circle, rgba(59,91,253,0.10), transparent 65%); top:-14vw; right:-10vw; animation: drift1 30s ease-in-out infinite alternate; }
+.orb-2 { width:38vw; height:38vw; background:radial-gradient(circle, rgba(124,92,255,0.08), transparent 65%); top:48vh; left:-14vw; animation: drift2 36s ease-in-out infinite alternate; }
+.orb-3 { width:30vw; height:30vw; background:radial-gradient(circle, rgba(43,184,163,0.08), transparent 65%); bottom:-10vw; right:18vw; animation: drift3 40s ease-in-out infinite alternate; }
+@keyframes drift1 { to { transform:translate(-6vw,8vh) scale(1.12); } }
+@keyframes drift2 { to { transform:translate(7vw,-7vh) scale(.92); } }
+@keyframes drift3 { to { transform:translate(-5vw,-5vh) scale(1.15); } }
+
+/* ── infra atmosphere layer (k8s clusters, DAGs, containers, db) ── */
+.bg-infra {
+  position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+}
+.bg-infra svg { position:absolute; overflow:visible; }
+.bg-infra .wire { stroke:rgba(15,18,34,0.07); fill:none; stroke-width:1.2; }
+.bg-infra .wire-fill { fill:rgba(15,18,34,0.035); stroke:rgba(15,18,34,0.06); stroke-width:1; }
+.bg-infra .node-dot { fill:rgba(15,18,34,0.08); }
+.bg-infra .accent-dot { fill:rgba(59,91,253,0.22); }
+.bg-infra .accent-dot.g { fill:rgba(13,157,111,0.20); }
+.bg-infra .accent-dot.v { fill:rgba(124,92,255,0.20); }
+.bg-infra .flow-line {
+  stroke:rgba(59,91,253,0.10); fill:none; stroke-width:1.2;
+  stroke-dasharray: 6 10; animation: dashFlow 9s linear infinite;
+}
+@keyframes dashFlow { to { stroke-dashoffset: -160; } }
+.infra-float-a { animation: infraDrift 22s ease-in-out infinite alternate; }
+.infra-float-b { animation: infraDrift 28s ease-in-out 3s infinite alternate-reverse; }
+.infra-float-c { animation: infraDrift 34s ease-in-out 6s infinite alternate; }
+@keyframes infraDrift { from { transform: translateY(0); } to { transform: translateY(-26px); } }
+@media (max-width:768px){ .bg-infra svg { opacity:.65; } }
+
+.bg-grid {
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(15,18,34,0.017) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,18,34,0.017) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 75%);
+}
+
+/* ════════════════ NAV ════════════════ */
+#navbar {
+  position:fixed; top:16px; left:50%; transform:translateX(-50%);
+  z-index:1000; width: min(1180px, calc(100% - 32px));
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 12px 14px 12px 24px;
+  border-radius: 100px;
+  border:1px solid transparent;
+  transition: all .45s var(--ease);
+}
+#navbar.scrolled {
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-color: var(--line);
+  box-shadow: var(--shadow-sm);
+}
+.nav-logo {
+  font-family:var(--font-display); font-weight:700; font-size:17px; letter-spacing:-0.4px;
+  color:var(--ink); text-decoration:none; display:flex; align-items:center; gap:10px;
+}
+.nav-mark {
+  width:30px; height:30px; border-radius:9px; background: var(--grad-hero);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:12px; font-weight:700;
+  transition: transform .4s var(--ease);
+}
+.nav-logo:hover .nav-mark { transform: rotate(-8deg) scale(1.08); }
+.nav-links { display:flex; align-items:center; gap:6px; list-style:none; margin:0; }
+.nav-links a {
+  font-size:13.5px; font-weight:500; color:var(--ink-soft); text-decoration:none;
+  padding: 8px 14px; border-radius:100px; transition: all .25s;
+}
+.nav-links a:hover { color:var(--ink); background: var(--bg-soft); }
+.nav-cta {
+  background: var(--ink) !important; color:#fff !important;
+  padding: 9px 20px !important; font-weight:600 !important;
+  transition: all .25s !important;
+}
+.nav-cta:hover { background: var(--blue) !important; transform: translateY(-1px); }
+.nav-avail { display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:500; color:var(--emerald); margin-right:6px; }
+.avail-dot { width:7px; height:7px; border-radius:50%; background:var(--emerald); animation:pulse 2.4s infinite; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(13,157,111,.30);} 50%{box-shadow:0 0 0 5px rgba(13,157,111,0);} }
+@media (max-width:860px){ .nav-links a:not(.nav-cta){display:none;} .nav-avail{display:none;} }
+
+/* ════════════════ COMMON ════════════════ */
+section { position:relative; z-index:2; }
+.wrap { max-width:1180px; margin:0 auto; padding:0 32px; }
+@media (max-width:768px){ .wrap{padding:0 22px;} }
+
+.eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:12.5px; font-weight:600; letter-spacing:.4px;
+  color:var(--blue); background:var(--blue-soft);
+  padding: 7px 16px; border-radius:100px; margin-bottom:24px;
+  border: 1px solid rgba(59,91,253,0.12);
+}
+.eyebrow.green { color:var(--emerald); background:var(--emerald-soft); border-color: rgba(13,157,111,0.14); }
+.sec-title {
+  font-family:var(--font-display); font-weight:700;
+  font-size: clamp(34px, 4.6vw, 58px); letter-spacing:-1.8px; line-height:1.08;
+  margin-bottom:20px;
+}
+.sec-title .grad { background:var(--grad-text); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.sec-lead { font-size:17.5px; color:var(--ink-soft); max-width:620px; line-height:1.7; }
+
+/* mask-reveal lines */
+.mask-line { display:block; overflow:hidden; }
+.mask-line > span { display:block; }
+
+.card {
+  background: var(--surface);
+  border:1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .3s;
+  position:relative;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--line-strong); }
+
+/* spotlight effect on cards */
+.spot { overflow:hidden; }
+.spot::before {
+  content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background: radial-gradient(420px circle at var(--mx,50%) var(--my,50%), rgba(59,91,253,0.07), transparent 45%);
+  opacity:0; transition: opacity .4s; z-index:0;
+}
+.spot:hover::before { opacity:1; }
+.spot > * { position:relative; z-index:1; }
+
+/* magnetic buttons */
+.magnetic { display:inline-block; will-change:transform; }
+
+/* ════════════════ HERO ════════════════ */
+#hero { padding: 172px 0 72px; }
+.hero-grid { display:grid; grid-template-columns: 1.22fr 1fr; gap:72px; align-items:center; }
+@media (max-width:991px){ .hero-grid{grid-template-columns:1fr; gap:56px;} }
+
+.hero-h1 {
+  font-family:var(--font-display); font-weight:700;
+  font-size: clamp(46px, 6.6vw, 88px);
+  letter-spacing:-2.9px; line-height:1.0;
+  margin-bottom:30px;
+}
+.hero-h1 .grad { background: var(--grad-text); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.hero-h1 .scribble { position:relative; white-space:nowrap; }
+.hero-h1 .scribble svg {
+  position:absolute; left:-2%; bottom:-10px; width:104%; height:22px; overflow:visible;
+}
+.hero-h1 .scribble path {
+  fill:none; stroke:url(#scribbleGrad); stroke-width:5; stroke-linecap:round;
+  stroke-dasharray: 1000; stroke-dashoffset: 1000;
+}
+.hero-sub {
+  font-size:18.5px; color:var(--ink-soft); line-height:1.75;
+  max-width:540px; margin-bottom:20px;
+}
+.hero-typed-line { display:flex; align-items:center; gap:12px; margin-bottom:40px; flex-wrap:wrap; }
+.hero-typed-label { font-size:13px; font-weight:600; color:var(--ink-mute); letter-spacing:.5px; text-transform:uppercase; }
+.hero-typed-chip {
+  font-family:var(--font-mono); font-size:14.5px; color:var(--blue-deep);
+  background:var(--blue-soft); border:1px solid rgba(59,91,253,0.14);
+  padding:9px 18px; border-radius:100px; min-width:270px;
+}
+.hero-typed-chip .typed-cursor { color:var(--blue); }
+
+.hero-actions { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:56px; }
+.btn-dark {
+  display:inline-flex; align-items:center; gap:9px;
+  background:var(--ink); color:#fff; text-decoration:none;
+  font-size:15px; font-weight:600; padding:15px 30px; border-radius:14px;
+  transition: background .3s, box-shadow .3s, color .3s; box-shadow: var(--shadow-sm);
+  position:relative; overflow:hidden;
+}
+.btn-dark::after {
+  content:''; position:absolute; inset:0; background:var(--grad-hero);
+  opacity:0; transition:opacity .35s;
+}
+.btn-dark:hover { color:#fff; box-shadow:0 12px 28px rgba(59,91,253,0.28); }
+.btn-dark:hover::after { opacity:1; }
+.btn-dark span, .btn-dark i { position:relative; z-index:1; }
+.btn-light {
+  display:inline-flex; align-items:center; gap:9px;
+  background:var(--surface); color:var(--ink); text-decoration:none;
+  font-size:15px; font-weight:600; padding:15px 30px; border-radius:14px;
+  border:1px solid var(--line-strong); transition: all .3s var(--ease);
+}
+.btn-light:hover { border-color:var(--blue); color:var(--blue); box-shadow:var(--shadow-sm); }
+
+.hero-stats { display:flex; gap:0; border-top:1px solid var(--line); padding-top:32px; }
+.hstat { flex:1; padding-right:24px; }
+.hstat + .hstat { padding-left:24px; border-left:1px solid var(--line); }
+.hstat-num {
+  font-family:var(--font-display); font-weight:700;
+  font-size: clamp(26px,3vw,38px); letter-spacing:-1.2px; line-height:1;
+  color: var(--ink);
+}
+.hstat-num em { font-style:normal; background:var(--grad-text); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.hstat-lbl { font-size:12.5px; color:var(--ink-mute); font-weight:500; margin-top:6px; }
+@media (max-width:576px){ .hero-stats{flex-wrap:wrap; gap:20px;} .hstat{flex:1 1 40%;} .hstat + .hstat{border-left:none; padding-left:0;} }
+
+/* hero visual: tilting portrait + orbit badge */
+.hero-visual { position:relative; perspective: 1100px; }
+.hero-visual::before {
+  content:''; position:absolute; inset:-12% -16%; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(48% 42% at 38% 38%, rgba(59,91,253,0.14), transparent 70%),
+    radial-gradient(42% 38% at 68% 64%, rgba(124,92,255,0.12), transparent 70%);
+  filter: blur(24px);
+}
+.portrait-card {
+  position:relative; border-radius:28px; overflow:hidden;
+  background:linear-gradient(150deg, #e9edff 0%, #f3effe 50%, #e6f6f1 100%);
+  border:1px solid var(--line); box-shadow:var(--shadow-lg);
+  transform-style: preserve-3d; will-change: transform;
+  transition: box-shadow .4s;
+}
+.portrait-card img {
+  width:100%; display:block; aspect-ratio: 0.92; object-fit:cover; object-position:top center;
+}
+.portrait-chip {
+  position:absolute; left:20px; bottom:20px;
+  background:rgba(255,255,255,0.82); backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.7); border-radius:14px;
+  padding:12px 18px; box-shadow:var(--shadow-sm);
+  transform: translateZ(40px);
+}
+.portrait-chip .n { font-family:var(--font-display); font-weight:700; font-size:15px; letter-spacing:-0.3px; }
+.portrait-chip .r { font-size:12px; color:var(--ink-soft); }
+
+/* rotating circular text badge */
+.orbit-badge {
+  position:absolute; bottom:-38px; right:-38px; width:128px; height:128px; z-index:3;
+  animation: spinSlow 16s linear infinite;
+  filter: drop-shadow(0 8px 20px rgba(15,18,34,0.10));
+}
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+.orbit-badge .center-ico {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-size:26px; color:var(--blue);
+  animation: spinSlowRev 16s linear infinite;
+}
+@keyframes spinSlowRev { to { transform: rotate(-360deg); } }
+.orbit-badge svg text { font-family:var(--font-mono); font-size:10.5px; letter-spacing:2.4px; fill:var(--ink-soft); text-transform:uppercase; }
+.orbit-badge .badge-disc { fill:rgba(255,255,255,0.92); stroke:rgba(15,18,34,0.08); }
+@media (max-width:576px){ .orbit-badge{ display:none; } }
+
+.portrait-card { position:relative; z-index:2; }
+.pipeline-card {
+  position:absolute; left:-60px; top:-150px; width:384px; z-index:3;
+  background:linear-gradient(165deg, rgba(255,255,255,0.94), rgba(243,245,252,0.88));
+  backdrop-filter:blur(22px) saturate(1.3); -webkit-backdrop-filter:blur(22px) saturate(1.3);
+  border:1px solid rgba(255,255,255,0.85); border-radius:20px;
+  box-shadow:var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.9);
+  overflow:hidden;
+  animation: floaty 6s ease-in-out infinite;
+}
+@keyframes floaty { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+.pipeline-head {
+  display:flex; align-items:center; gap:8px;
+  padding:13px 18px; border-bottom:1px solid var(--line);
+}
+.pl-dot { width:10px; height:10px; border-radius:50%; }
+.pl-dot.r { background:#ff5f57; } .pl-dot.y { background:#febc2e; } .pl-dot.g { background:#28c840; }
+.pipeline-title {
+  margin-left:8px; font-family:var(--font-mono); font-size:11px; font-weight:500;
+  color:var(--ink-mute); letter-spacing:.3px;
+}
+.pipeline-badge {
+  margin-left:auto; display:flex; align-items:center; gap:6px;
+  font-size:10.5px; color:var(--emerald); font-weight:600;
+  background:var(--emerald-soft); border:1px solid rgba(13,157,111,0.16);
+  padding:3px 10px; border-radius:100px;
+}
+.pipeline-badge i { font-size:6px; }
+.pipeline-body {
+  padding:12px 18px 14px; font-family:var(--font-mono);
+  font-size:10.5px; line-height:1.95; min-height:158px;
+}
+.pl-ln { display:block; white-space:pre-wrap; word-break:break-word; }
+.c-cmd { color:var(--ink); font-weight:600; }
+.c-dim { color:var(--ink-mute); }
+.c-blue { color:var(--blue-deep); font-weight:500; }
+.c-cyan { color:#2787d6; font-weight:500; }
+.c-green { color:var(--emerald); font-weight:600; }
+.c-gold { color:#e08c2f; font-weight:600; }
+.c-violet { color:var(--violet); font-weight:500; }
+
+.metric-float {
+  position:absolute; left:-38px; bottom:150px; z-index:2;
+  background:rgba(255,255,255,0.9); backdrop-filter:blur(20px);
+  border:1px solid var(--line); border-radius:16px; padding:16px 22px;
+  box-shadow:var(--shadow-md); animation: floaty 7s ease-in-out 1.2s infinite;
+}
+.metric-float .v { font-family:var(--font-display); font-weight:700; font-size:24px; letter-spacing:-1px; }
+.metric-float .v span { color:var(--emerald); }
+.metric-float .k { font-size:11.5px; color:var(--ink-mute); font-weight:500; }
+@media (min-width:992px){
+  #hero{ padding-bottom: 120px; }
+}
+@media (max-width:991px){
+  .hero-visual{ display:flex; flex-direction:column; }
+  .pipeline-card{ position:relative; left:auto; top:auto; width:min(384px,100%); margin:22px 0 0; animation:none; }
+  .metric-float{ left:-6px; }
+}
+@media (max-width:576px){
+  .pipeline-card{ width:100%; }
+  .metric-float{ display:none; }
+}
+
+/* ════════════════ DATA FLOW ILLUSTRATION ════════════════ */
+.flow-section { padding: 56px 0 8px; }
+.flow-svg-wrap {
+  border:1px solid var(--line); border-radius:24px; background:var(--surface);
+  box-shadow:var(--shadow-sm); padding: 36px 40px 28px; overflow:hidden; position:relative;
+}
+.flow-svg-wrap::before {
+  content:''; position:absolute; inset:0;
+  background-image: radial-gradient(rgba(15,18,34,0.04) 1px, transparent 1px);
+  background-size:22px 22px; pointer-events:none;
+}
+.flow-title { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; position:relative; }
+.flow-title span { font-size:13px; font-weight:600; color:var(--ink-mute); letter-spacing:1px; text-transform:uppercase; }
+.flow-title .live { display:flex; align-items:center; gap:7px; color:var(--emerald); font-size:12px; font-weight:600; }
+#flowSvg { width:100%; height:auto; display:block; position:relative; }
+#flowSvg .node-box { fill:#fff; stroke:rgba(15,18,34,0.10); rx:12; }
+#flowSvg .node-lbl { font-family:var(--font-display); font-weight:600; font-size:13px; fill:var(--ink); }
+#flowSvg .node-sub { font-family:var(--font-body); font-size:10px; fill:var(--ink-mute); }
+#flowSvg .pipe { fill:none; stroke:rgba(15,18,34,0.10); stroke-width:1.5; }
+#flowSvg .packet { fill:var(--blue); }
+#flowSvg .packet.g { fill:var(--emerald); }
+#flowSvg .packet.v { fill:var(--violet); }
+
+/* ════════════════ LOGO / STACK STRIP ════════════════ */
+.strip { padding: 56px 0 8px; }
+.strip-label { text-align:center; font-size:12.5px; font-weight:600; letter-spacing:1.5px; color:var(--ink-mute); text-transform:uppercase; margin-bottom:26px; }
+.strip-row { overflow:hidden; position:relative; }
+.strip-row::before, .strip-row::after {
+  content:''; position:absolute; top:0; bottom:0; width:120px; z-index:2; pointer-events:none;
+}
+.strip-row::before { left:0; background:linear-gradient(90deg, var(--bg), transparent); }
+.strip-row::after { right:0; background:linear-gradient(-90deg, var(--bg), transparent); }
+.strip-track { display:inline-flex; gap:56px; white-space:nowrap; animation: scrollX 34s linear infinite; padding: 6px 0 22px; }
+.strip-row:hover .strip-track { animation-play-state:paused; }
+@keyframes scrollX { to { transform:translateX(-50%); } }
+.strip-item {
+  display:inline-flex; align-items:center; gap:11px;
+  font-family:var(--font-display); font-weight:600; font-size:17px; color:var(--ink-mute);
+  transition:color .3s, transform .3s;
+}
+.strip-item:hover { color:var(--ink); transform:translateY(-2px); }
+.strip-item i { font-size:20px; color:var(--ink-mute); transition:color .3s; }
+.strip-item:hover i { color:var(--blue); }
+
+/* ════════════════ NUMBERS BAND ════════════════ */
+#numbers { padding: 120px 0 130px; }
+.num-band { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:26px; overflow:hidden; }
+@media (max-width:860px){ .num-band{grid-template-columns:1fr 1fr;} }
+@media (max-width:480px){ .num-band{grid-template-columns:1fr;} }
+.num-cell { background:var(--surface); padding: 52px 36px 56px; position:relative; overflow:hidden; transition: background .35s; }
+.num-cell:hover { background:#fdfdff; }
+.num-cell .giant {
+  font-family:var(--font-display); font-weight:700;
+  font-size: clamp(52px, 6.5vw, 92px); letter-spacing:-4px; line-height:1;
+  background:var(--grad-text); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.num-cell:nth-child(3) .giant, .num-cell:nth-child(4) .giant { background:linear-gradient(100deg,#0d9d6f,#2bb8a3); -webkit-background-clip:text; background-clip:text; }
+.num-cell .nk { font-family:var(--font-display); font-weight:600; font-size:16px; letter-spacing:-0.3px; margin-top:14px; }
+.num-cell .nd { font-size:13px; color:var(--ink-mute); margin-top:4px; line-height:1.6; }
+.num-cell .watermark {
+  position:absolute; right:-10px; bottom:-18px; font-size:110px; opacity:.045; line-height:1;
+}
+
+/* ════════════════ ABOUT / STORY ════════════════ */
+#about { padding: 40px 0 130px; }
+.story-head { text-align:center; max-width:760px; margin:0 auto 72px; }
+.story-head .sec-lead { margin:0 auto; }
+
+.manifesto {
+  font-family:var(--font-display); font-weight:600;
+  font-size: clamp(24px, 3.1vw, 42px); line-height:1.32; letter-spacing:-1px;
+  max-width: 980px; margin: 0 auto 88px; text-align:center;
+}
+.manifesto .w { display:inline-block; color:#c9cdda; transition: color .4s; }
+.manifesto .hl { background:var(--grad-text); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+.pillars { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+@media (max-width:991px){ .pillars{grid-template-columns:1fr 1fr;} }
+@media (max-width:576px){ .pillars{grid-template-columns:1fr;} }
+.pillar { padding:34px 30px 38px; }
+.pillar-icon {
+  width:50px; height:50px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center; font-size:21px;
+  margin-bottom:22px; transition: transform .4s var(--ease);
+}
+.pillar:hover .pillar-icon { transform: rotate(-8deg) scale(1.1); }
+.pillar:nth-child(1) .pillar-icon { background:var(--blue-soft); color:var(--blue); }
+.pillar:nth-child(2) .pillar-icon { background:#f1edff; color:var(--violet); }
+.pillar:nth-child(3) .pillar-icon { background:var(--emerald-soft); color:var(--emerald); }
+.pillar:nth-child(4) .pillar-icon { background:#fff4e8; color:#e08c2f; }
+.pillar h3 { font-family:var(--font-display); font-size:17.5px; font-weight:700; letter-spacing:-0.3px; margin-bottom:10px; }
+.pillar p { font-size:14px; color:var(--ink-soft); line-height:1.7; margin:0; }
+
+.story-meta { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-top:56px; }
+.meta-chip {
+  display:inline-flex; align-items:center; gap:9px;
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:100px; padding:10px 22px;
+  font-size:13.5px; font-weight:500; color:var(--ink-soft);
+  box-shadow:var(--shadow-sm);
+}
+.meta-chip i { color:var(--blue); }
+
+/* ════════════════ EXPERIENCE ════════════════ */
+#experience { padding: 130px 0; background: var(--bg-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line); position:relative; }
+#experience::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background-image: radial-gradient(rgba(15,18,34,0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 0%, black, transparent);
+  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 0%, black, transparent);
+}
+.xp-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:64px; flex-wrap:wrap; }
+
+.xp-card {
+  background:var(--surface); border:1px solid var(--line); border-radius:26px;
+  box-shadow: var(--shadow-md); overflow:hidden; margin-bottom:36px;
+  transition: box-shadow .4s var(--ease);
+}
+@media (min-width:992px){
+  .xp-stack .xp-card { position:sticky; top:104px; will-change:transform; }
+  /* long reading runway: card 1 stays fully on screen for ~60vh of scroll before card 2 arrives */
+  .xp-stack .xp-card:first-child { margin-bottom: 60vh; }
+  .xp-stack .xp-card:nth-child(2) { top:128px; }
+}
+.xp-card:hover { box-shadow: var(--shadow-lg); }
+
+.xp-top {
+  display:grid; grid-template-columns:auto 1fr auto; gap:24px; align-items:center;
+  padding: 40px 48px 32px;
+}
+@media (max-width:768px){ .xp-top{grid-template-columns:auto 1fr; padding:28px 26px 22px;} }
+.xp-glyph {
+  width:64px; height:64px; border-radius:18px;
+  display:flex; align-items:center; justify-content:center; font-size:26px;
+  transition: transform .4s var(--ease);
+}
+.xp-card:hover .xp-glyph { transform: rotate(-6deg) scale(1.06); }
+.xp-glyph.bank { background:var(--blue-soft); color:var(--blue); }
+.xp-glyph.fmcg { background:var(--emerald-soft); color:var(--emerald); }
+.xp-co { font-family:var(--font-display); font-weight:700; font-size:clamp(21px,2.6vw,30px); letter-spacing:-0.8px; line-height:1.15; }
+.xp-co small { display:block; font-family:var(--font-body); font-weight:500; font-size:13.5px; color:var(--ink-mute); margin-top:5px; letter-spacing:0; }
+.xp-when { text-align:right; }
+@media (max-width:768px){ .xp-when{grid-column:1/-1; text-align:left;} }
+.xp-period { font-size:13.5px; font-weight:600; color:var(--ink); }
+.xp-mode { display:inline-block; margin-top:8px; font-size:12px; font-weight:600; padding:5px 14px; border-radius:100px; }
+.xp-mode.ft { background:var(--blue-soft); color:var(--blue-deep); }
+.xp-mode.fl { background:var(--emerald-soft); color:var(--emerald); }
+
+.xp-role {
+  margin: 0 48px; padding: 13px 22px;
+  background: var(--bg-soft); border:1px solid var(--line); border-radius:12px;
+  font-size:14px; font-weight:600; color:var(--ink-soft);
+  display:flex; align-items:center; gap:10px; width:fit-content;
+}
+.xp-role i { color:var(--blue); }
+@media (max-width:768px){ .xp-role{margin:0 26px;} }
+
+.xp-scale {
+  display:grid; grid-template-columns:repeat(5,1fr);
+  margin: 32px 48px 0; border:1px solid var(--line); border-radius:16px; overflow:hidden;
+  background: var(--bg-soft);
+}
+.xp-scale.four { grid-template-columns:repeat(4,1fr); }
+@media (max-width:768px){ .xp-scale{grid-template-columns:repeat(2,1fr) !important; margin:24px 26px 0;} }
+.xp-scale-cell { padding:22px 16px; text-align:center; border-right:1px solid var(--line); background:var(--surface); }
+.xp-scale-cell:last-child { border-right:none; }
+@media (max-width:768px){ .xp-scale-cell{ border-bottom:1px solid var(--line); } }
+.xp-scale-num { font-family:var(--font-display); font-weight:700; font-size:clamp(19px,2.2vw,28px); letter-spacing:-0.8px; }
+.xp-scale-num.c1 { color:var(--blue-deep); }
+.xp-scale-num.c2 { color:var(--violet); }
+.xp-scale-num.c3 { color:var(--emerald); }
+.xp-scale-lbl { font-size:11.5px; color:var(--ink-mute); font-weight:500; margin-top:3px; }
+
+.xp-body { padding: 36px 48px 44px; }
+@media (max-width:768px){ .xp-body{padding:26px 26px 30px;} }
+.xp-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px 36px; margin-bottom:30px; }
+@media (max-width:768px){ .xp-grid{grid-template-columns:1fr;} }
+.xp-item { display:flex; gap:15px; padding:15px 0; border-bottom:1px solid var(--line); }
+.xp-check {
+  width:24px; height:24px; border-radius:8px; flex-shrink:0; margin-top:2px;
+  background:var(--emerald-soft); color:var(--emerald);
+  display:flex; align-items:center; justify-content:center; font-size:12px;
+}
+.xp-item h4 { font-family:var(--font-display); font-size:15px; font-weight:600; letter-spacing:-0.2px; margin-bottom:4px; }
+.xp-item p { font-size:13.5px; color:var(--ink-soft); line-height:1.65; margin:0; }
+
+.xp-tech { display:flex; flex-wrap:wrap; gap:8px; }
+.xp-pill {
+  font-size:12.5px; font-weight:500; padding:7px 15px;
+  border-radius:100px; background:var(--bg-soft); border:1px solid var(--line);
+  color:var(--ink-soft); transition: all .25s;
+}
+.xp-pill:hover { background:var(--blue-soft); border-color:rgba(59,91,253,0.2); color:var(--blue-deep); }
+
+/* ════════════════ SKILLS — horizontal stack rows ════════════════ */
+#skills { padding: 130px 0; }
+.skill-rows { border-top:1px solid var(--line-strong); }
+.skill-row {
+  display:grid; grid-template-columns: 88px 280px 1fr; gap:36px; align-items:start;
+  padding: 42px 28px 42px 20px; border-bottom:1px solid var(--line-strong);
+  position:relative; border-radius:0;
+  transition: background .35s var(--ease);
+}
+.skill-row::before {
+  content:''; position:absolute; left:0; top:18px; bottom:18px; width:3px; border-radius:3px;
+  background:var(--grad-hero); transform:scaleY(0); transform-origin:top;
+  transition: transform .45s var(--ease);
+}
+.skill-row:hover { background: rgba(255,255,255,0.72); backdrop-filter: blur(6px); }
+.skill-row:hover::before { transform:scaleY(1); }
+@media (max-width:991px){
+  .skill-row{ grid-template-columns: 64px 1fr; gap:18px; padding:34px 16px 34px 14px; }
+  .skill-row .skill-chips{ grid-column:1/-1; }
+}
+.skill-row-num {
+  font-family:var(--font-mono); font-size:13px; font-weight:500;
+  color:var(--ink-mute); letter-spacing:1px; padding-top:12px;
+}
+.skill-row-name { display:flex; align-items:flex-start; gap:14px; }
+.skill-icon {
+  width:46px; height:46px; border-radius:13px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:19px;
+  transition: transform .4s var(--ease);
+}
+.skill-row:hover .skill-icon { transform: rotate(-8deg) scale(1.08); }
+.skill-row:nth-child(1) .skill-icon { background:var(--blue-soft); color:var(--blue); }
+.skill-row:nth-child(2) .skill-icon { background:#f1edff; color:var(--violet); }
+.skill-row:nth-child(3) .skill-icon { background:var(--emerald-soft); color:var(--emerald); }
+.skill-row:nth-child(4) .skill-icon { background:#fff4e8; color:#e08c2f; }
+.skill-row:nth-child(5) .skill-icon { background:#ffeef2; color:#d6456b; }
+.skill-row:nth-child(6) .skill-icon { background:#e8f4ff; color:#2787d6; }
+.skill-row-name h3 { font-family:var(--font-display); font-size:19px; font-weight:700; letter-spacing:-0.4px; margin:0; }
+.skill-row-name span { display:block; font-size:12.5px; color:var(--ink-mute); font-weight:500; margin-top:2px; }
+.skill-chips { display:flex; flex-wrap:wrap; gap:9px; padding-top:4px; }
+.chip {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:13px; font-weight:500; padding:9px 17px;
+  border-radius:100px;
+  background:rgba(255,255,255,0.72); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  border:1px solid var(--line-strong); box-shadow:var(--shadow-sm);
+  color:var(--ink-soft); transition: all .3s var(--ease);
+}
+.chip i { font-size:13px; opacity:.65; }
+.chip:hover { background:var(--ink); border-color:var(--ink); color:#fff; transform:translateY(-2px); box-shadow:var(--shadow-sm); }
+.chip:hover i { opacity:1; }
+
+/* ════════════════ EDITORIAL MARQUEE ════════════════ */
+.editorial-marquee {
+  padding: 84px 0; overflow:hidden; position:relative; z-index:2;
+}
+.em-track { display:flex; gap:64px; white-space:nowrap; width:max-content; animation: emScroll 36s linear infinite; }
+@keyframes emScroll { to { transform: translateX(-50%); } }
+.em-item {
+  font-family:var(--font-display); font-weight:700;
+  font-size: clamp(44px, 6.5vw, 96px); letter-spacing:-3px; line-height:1;
+  color:transparent; -webkit-text-stroke: 1.5px rgba(15,18,34,0.18);
+  display:flex; align-items:center; gap:64px;
+}
+.em-item.solid {
+  color:transparent; -webkit-text-stroke:0;
+  background:var(--grad-text); -webkit-background-clip:text; background-clip:text;
+}
+.em-item .em-dot { width:14px; height:14px; border-radius:50%; background:var(--blue); opacity:.35; flex-shrink:0; -webkit-text-stroke:0; }
+
+/* ════════════════ CERTS ════════════════ */
+#certs { padding: 130px 0; background:var(--bg-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.cert-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+@media (max-width:991px){ .cert-grid{grid-template-columns:1fr 1fr;} }
+@media (max-width:576px){ .cert-grid{grid-template-columns:1fr;} }
+.cert { padding:32px 30px; background:var(--surface); }
+.cert-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:22px; }
+.cert-glyph {
+  width:50px; height:50px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center; font-size:21px;
+  transition: transform .4s var(--ease);
+}
+.cert:hover .cert-glyph { transform: rotate(-8deg) scale(1.1); }
+.cert:nth-child(1) .cert-glyph { background:var(--blue-soft); color:var(--blue); }
+.cert:nth-child(2) .cert-glyph { background:#e8f4ff; color:#2787d6; }
+.cert:nth-child(3) .cert-glyph { background:#fff4e8; color:#e08c2f; }
+.cert:nth-child(4) .cert-glyph { background:#f1edff; color:var(--violet); }
+.cert:nth-child(5) .cert-glyph { background:var(--emerald-soft); color:var(--emerald); }
+.cert:nth-child(6) .cert-glyph { background:#ffeef2; color:#d6456b; }
+.cert-yr {
+  font-size:11.5px; font-weight:600; color:var(--ink-mute);
+  background:var(--bg-soft); border:1px solid var(--line);
+  padding:4px 12px; border-radius:100px;
+}
+.cert h3 { font-family:var(--font-display); font-size:16.5px; font-weight:700; letter-spacing:-0.3px; margin-bottom:5px; }
+.cert .issuer { font-size:12.5px; color:var(--ink-mute); font-weight:500; margin-bottom:18px; }
+.cert-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.cert-tags span {
+  font-size:11.5px; font-weight:500; padding:4px 11px; border-radius:7px;
+  background:var(--bg-soft); border:1px solid var(--line); color:var(--ink-soft);
+}
+
+/* ════════════════ EDUCATION ════════════════ */
+#education { padding: 130px 0; }
+.edu-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:64px; }
+@media (max-width:768px){ .edu-grid{grid-template-columns:1fr;} }
+.edu-card { padding:38px 36px; display:flex; gap:22px; align-items:flex-start; }
+.edu-glyph {
+  width:54px; height:54px; border-radius:15px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:22px;
+}
+.edu-card:nth-child(1) .edu-glyph { background:var(--blue-soft); color:var(--blue); }
+.edu-card:nth-child(2) .edu-glyph { background:var(--emerald-soft); color:var(--emerald); }
+.edu-years { font-size:12.5px; font-weight:600; color:var(--ink-mute); margin-bottom:6px; }
+.edu-deg { font-family:var(--font-display); font-size:20px; font-weight:700; letter-spacing:-0.5px; line-height:1.25; margin-bottom:6px; }
+.edu-note { font-size:13.5px; color:var(--ink-soft); margin:0; }
+
+.langs { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+@media (max-width:768px){ .langs{grid-template-columns:1fr;} }
+.lang { padding:24px 26px; display:flex; align-items:center; gap:16px; }
+.lang-flag { font-size:26px; }
+.lang-name { font-family:var(--font-display); font-weight:700; font-size:15.5px; }
+.lang-lvl { font-size:12px; color:var(--ink-mute); font-weight:500; }
+.lang-meter { margin-left:auto; display:flex; gap:4px; }
+.lang-meter i { width:5px; height:20px; border-radius:3px; background:var(--line-strong); }
+.lang-meter i.on { background:var(--blue); }
+
+/* ════════════════ CONTACT ════════════════ */
+#contact { padding: 130px 0 110px; }
+.contact-card {
+  position:relative; overflow:hidden; border-radius:32px;
+  background: linear-gradient(135deg, #11142a 0%, #1b2147 55%, #15323a 110%);
+  color:#fff; padding: clamp(44px, 7vw, 88px);
+  box-shadow: var(--shadow-lg);
+}
+.contact-card::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 80% at 70% 20%, black, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 70% 20%, black, transparent 75%);
+}
+.contact-card::after {
+  content:''; position:absolute; width:480px; height:480px; border-radius:50%;
+  background: radial-gradient(circle, rgba(124,92,255,0.22), transparent 65%);
+  top:-200px; right:-140px; pointer-events:none;
+}
+.contact-eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:12.5px; font-weight:600; letter-spacing:.4px;
+  color:#9db1ff; background:rgba(157,177,255,0.10);
+  border:1px solid rgba(157,177,255,0.18);
+  padding:7px 16px; border-radius:100px; margin-bottom:26px;
+  position:relative; z-index:1;
+}
+.contact-title {
+  font-family:var(--font-display); font-weight:700;
+  font-size: clamp(32px, 4.6vw, 58px); letter-spacing:-1.8px; line-height:1.08;
+  margin-bottom:18px; position:relative; z-index:1;
+}
+.contact-sub { font-size:16.5px; color:rgba(255,255,255,0.65); max-width:520px; line-height:1.7; margin-bottom:44px; position:relative; z-index:1; }
+
+.contact-actions { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:52px; position:relative; z-index:1; }
+.btn-white {
+  display:inline-flex; align-items:center; gap:9px;
+  background:#fff; color:var(--ink); text-decoration:none;
+  font-size:15px; font-weight:600; padding:15px 30px; border-radius:14px;
+  transition: all .3s var(--ease);
+}
+.btn-white:hover { box-shadow:0 14px 32px rgba(0,0,0,0.3); color:var(--blue-deep); }
+.btn-outline {
+  display:inline-flex; align-items:center; gap:9px;
+  background:transparent; color:#fff; text-decoration:none;
+  font-size:15px; font-weight:600; padding:15px 30px; border-radius:14px;
+  border:1px solid rgba(255,255,255,0.22); transition: all .3s var(--ease);
+}
+.btn-outline:hover { background:rgba(255,255,255,0.08); color:#fff; }
+
+.contact-cells { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; position:relative; z-index:1; }
+@media (max-width:768px){ .contact-cells{grid-template-columns:1fr;} }
+.contact-cell {
+  background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.10);
+  border-radius:16px; padding:22px 24px; text-decoration:none; color:#fff;
+  transition: all .3s var(--ease); display:block;
+}
+.contact-cell:hover { background:rgba(255,255,255,0.10); color:#fff; transform:translateY(-2px); }
+.cc-label { font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; color:rgba(255,255,255,0.45); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.cc-label i { color:#9db1ff; }
+.cc-value { font-family:var(--font-display); font-weight:600; font-size:15.5px; letter-spacing:-0.2px; }
+
+/* ════════════════ BIG BRAND FOOTER ════════════════ */
+footer { padding: 64px 0 0; overflow:hidden; }
+.foot { display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; padding-bottom:36px; }
+.foot span { font-size:13px; color:var(--ink-mute); font-weight:500; }
+.foot b { color:var(--ink); font-weight:600; }
+.brand-giant-row { overflow:hidden; }
+.brand-giant {
+  display:flex; gap:.6em; width:max-content;
+  font-family:var(--font-display); font-weight:700;
+  font-size: clamp(64px, 13vw, 210px); letter-spacing:-6px; line-height:.84;
+  margin-bottom:-0.12em; user-select:none; white-space:nowrap;
+  animation: emScroll 30s linear infinite;
+}
+.brand-giant span {
+  background: linear-gradient(180deg, rgba(15,18,34,0.10), rgba(15,18,34,0.015));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.brand-giant span.ghost { -webkit-text-fill-color:transparent; background:none; -webkit-text-stroke:1.5px rgba(15,18,34,0.07); }
+
+/* back to top */
+.totop {
+  position:fixed; bottom:26px; right:26px; z-index:500;
+  width:46px; height:46px; border-radius:50%;
+  background:var(--surface); border:1px solid var(--line-strong);
+  color:var(--ink); display:flex; align-items:center; justify-content:center;
+  text-decoration:none; opacity:0; pointer-events:none;
+  transition: all .35s var(--ease); box-shadow:var(--shadow-md);
+}
+.totop.show { opacity:1; pointer-events:auto; }
+.totop:hover { color:var(--blue); transform:translateY(-3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-monogram">SM</div>
+    <div class="loader-mark"><span>Soheil Moosavi</span></div>
+    <div class="loader-roles"><span>Data Platform Engineer — Aarhus, Denmark</span></div>
+    <div class="loader-track"><div class="loader-fill" id="loadFill"></div></div>
+  </div>
+</div>
+
+<!-- BACKDROP -->
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+<div class="bg-grid"></div>
+
+<!-- INFRA ATMOSPHERE LAYER -->
+<div class="bg-infra" aria-hidden="true">
+
+  <!-- k8s-style hex node cluster — top left -->
+  <svg class="infra-float-a" style="top:14vh; left:3vw; width:240px;" viewBox="0 0 240 200">
+    <path class="wire" d="M120 18 l34 20 v40 l-34 20 -34 -20 v-40 z"/>
+    <path class="wire" d="M52 78 l26 15 v30 l-26 15 -26 -15 v-30 z"/>
+    <path class="wire" d="M188 78 l26 15 v30 l-26 15 -26 -15 v-30 z"/>
+    <path class="wire" d="M120 118 l26 15 v30 l-26 15 -26 -15 v-30 z"/>
+    <line class="wire" x1="98" y1="86" x2="66" y2="96"/>
+    <line class="wire" x1="142" y1="86" x2="174" y2="96"/>
+    <line class="wire" x1="120" y1="98" x2="120" y2="118"/>
+    <circle class="accent-dot" r="2.5"><animateMotion dur="6s" repeatCount="indefinite" path="M98 86 L66 96"/></circle>
+    <circle class="accent-dot v" r="2.5"><animateMotion dur="7s" begin="2s" repeatCount="indefinite" path="M142 86 L174 96"/></circle>
+    <circle class="node-dot" cx="120" cy="58" r="3"/>
+    <circle class="node-dot" cx="52" cy="108" r="3"/>
+    <circle class="node-dot" cx="188" cy="108" r="3"/>
+  </svg>
+
+  <!-- airflow-style DAG — right middle -->
+  <svg class="infra-float-b" style="top:38vh; right:2vw; width:300px;" viewBox="0 0 300 180">
+    <circle class="wire" cx="24" cy="90" r="9"/>
+    <circle class="wire" cx="110" cy="40" r="9"/>
+    <circle class="wire" cx="110" cy="140" r="9"/>
+    <circle class="wire" cx="196" cy="90" r="9"/>
+    <circle class="wire" cx="276" cy="40" r="9"/>
+    <circle class="wire" cx="276" cy="140" r="9"/>
+    <path class="wire" d="M32 84 C 60 64, 80 50, 101 44"/>
+    <path class="wire" d="M32 96 C 60 116, 80 130, 101 136"/>
+    <path class="wire" d="M119 44 C 150 56, 165 72, 188 84"/>
+    <path class="wire" d="M119 136 C 150 124, 165 108, 188 96"/>
+    <path class="flow-line" d="M205 86 C 235 70, 248 52, 267 44"/>
+    <path class="flow-line" style="animation-delay:2s" d="M205 94 C 235 110, 248 128, 267 136"/>
+    <circle class="accent-dot g" r="2.5"><animateMotion dur="8s" repeatCount="indefinite" path="M32 84 C 60 64, 80 50, 101 44"/></circle>
+    <circle class="accent-dot" r="2.5"><animateMotion dur="9s" begin="3s" repeatCount="indefinite" path="M119 136 C 150 124, 165 108, 188 96"/></circle>
+  </svg>
+
+  <!-- container stack wireframe — bottom left -->
+  <svg class="infra-float-c" style="bottom:12vh; left:5vw; width:200px;" viewBox="0 0 200 150">
+    <rect class="wire-fill" x="20" y="96" width="52" height="34" rx="6"/>
+    <rect class="wire-fill" x="78" y="96" width="52" height="34" rx="6"/>
+    <rect class="wire-fill" x="136" y="96" width="52" height="34" rx="6"/>
+    <rect class="wire-fill" x="49" y="56" width="52" height="34" rx="6"/>
+    <rect class="wire-fill" x="107" y="56" width="52" height="34" rx="6"/>
+    <rect class="wire-fill" x="78" y="16" width="52" height="34" rx="6"/>
+    <line class="wire" x1="46" y1="113" x2="20" y2="113"/>
+  </svg>
+
+  <!-- database schema motif — bottom right -->
+  <svg class="infra-float-a" style="bottom:16vh; right:4vw; width:220px;" viewBox="0 0 220 170">
+    <ellipse class="wire" cx="60" cy="30" rx="34" ry="11"/>
+    <path class="wire" d="M26 30 v44 c0 6, 15 11, 34 11 s34 -5, 34 -11 v-44"/>
+    <path class="wire" d="M26 52 c0 6, 15 11, 34 11 s34 -5, 34 -11"/>
+    <rect class="wire" x="140" y="20" width="64" height="20" rx="5"/>
+    <rect class="wire" x="140" y="48" width="64" height="20" rx="5"/>
+    <rect class="wire" x="140" y="76" width="64" height="20" rx="5"/>
+    <path class="flow-line" d="M96 56 C 116 56, 120 58, 138 58"/>
+    <path class="wire" d="M60 88 C 60 120, 100 132, 130 132"/>
+    <circle class="accent-dot" r="2.5"><animateMotion dur="7s" repeatCount="indefinite" path="M96 56 C 116 56, 120 58, 138 58"/></circle>
+    <circle class="node-dot" cx="172" cy="30" r="2.5"/>
+    <circle class="node-dot" cx="172" cy="58" r="2.5"/>
+  </svg>
+
+  <!-- long pipeline connection — center, very faint -->
+  <svg style="top:62vh; left:18vw; width:52vw;" viewBox="0 0 800 60" preserveAspectRatio="none">
+    <path class="flow-line" style="animation-duration:14s" d="M0 30 C 200 6, 300 54, 500 30 S 700 18, 800 30"/>
+    <circle class="accent-dot g" r="3"><animateMotion dur="16s" repeatCount="indefinite" path="M0 30 C 200 6, 300 54, 500 30 S 700 18, 800 30"/></circle>
+  </svg>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo"><span class="nav-mark">SM</span> Soheil Moosavi</a>
+  <ul class="nav-links">
+    <li class="nav-avail"><span class="avail-dot"></span> Open to work</li>
+    <li><a href="#about">Story</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Expertise</a></li>
+    <li><a href="#certs">Credentials</a></li>
+    <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+  </ul>
+</nav>
+
+<!-- ════════════ HERO ════════════ -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow reveal-up"><i class="bi bi-geo-alt"></i> Aarhus, Denmark · Data Infrastructure</div>
+        <h1 class="hero-h1">
+          <span class="mask-line"><span>Data platforms</span></span>
+          <span class="mask-line"><span>built for <span class="grad">zero</span></span></span>
+          <span class="mask-line"><span class="scribble"><span class="grad">downtime.</span>
+            <svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true">
+              <defs><linearGradient id="scribbleGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#3b5bfd"/><stop offset="1" stop-color="#2bb8a3"/>
+              </linearGradient></defs>
+              <path id="scribblePath" d="M4 14 Q 75 4 150 11 T 296 8"/>
+            </svg>
+          </span></span>
+        </h1>
+        <p class="hero-sub reveal-up">
+          Senior Data Platform Engineer with 10+ years running mission-critical infrastructure — from a 30M-user banking core processing 20M+ daily transactions to cloud-native Lakehouse platforms.
+        </p>
+        <div class="hero-typed-line reveal-up">
+          <span class="hero-typed-label">Currently</span>
+          <span class="hero-typed-chip"><span id="typed"></span></span>
+        </div>
+        <div class="hero-actions reveal-up">
+          <span class="magnetic"><a href="#experience" class="btn-dark"><span>View experience</span> <i class="bi bi-arrow-right"></i></a></span>
+          <span class="magnetic"><a href="#contact" class="btn-light"><i class="bi bi-envelope"></i> Get in touch</a></span>
+        </div>
+        <div class="hero-stats reveal-up">
+          <div class="hstat"><div class="hstat-num"><span data-count="10">0</span><em>+</em></div><div class="hstat-lbl">Years in production</div></div>
+          <div class="hstat"><div class="hstat-num"><span data-count="20">0</span><em>M+</em></div><div class="hstat-lbl">Daily transactions</div></div>
+          <div class="hstat"><div class="hstat-num"><span data-count="30">0</span><em>M+</em></div><div class="hstat-lbl">Users served</div></div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal-up">
+        <div class="orbit-badge">
+          <svg viewBox="0 0 128 128">
+            <circle class="badge-disc" cx="64" cy="64" r="62"/>
+            <defs><path id="circlePath" d="M 64,64 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0"/></defs>
+            <text><textPath href="#circlePath">DATA PLATFORM · RELIABILITY · SCALE ·&#160;</textPath></text>
+          </svg>
+          <span class="center-ico"><i class="bi bi-database-check"></i></span>
+        </div>
+        <div class="portrait-card" id="tiltCard">
+          <img src="profile-pic.png" alt="Soheil Moosavi — Data Platform Engineer">
+          <div class="portrait-chip">
+            <div class="n">Soheil Moosavi</div>
+            <div class="r">Data Platform Engineer</div>
+          </div>
+        </div>
+        <div class="pipeline-card">
+          <div class="pipeline-head">
+            <span class="pl-dot r"></span><span class="pl-dot y"></span><span class="pl-dot g"></span>
+            <span class="pipeline-title">soheil@platform: ~/pipeline</span>
+            <span class="pipeline-badge"><i class="bi bi-circle-fill"></i> Healthy</span>
+          </div>
+          <div class="pipeline-body" id="plLog"></div>
+        </div>
+        <div class="metric-float">
+          <div class="v">−40<span>%</span></div>
+          <div class="k">Production incidents</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA FLOW ILLUSTRATION -->
+<div class="flow-section">
+  <div class="wrap">
+    <div class="flow-svg-wrap">
+      <div class="flow-title">
+        <span>How I think about data</span>
+        <span class="live"><span class="avail-dot"></span> Streaming live</span>
+      </div>
+      <svg id="flowSvg" viewBox="0 0 1080 190" xmlns="http://www.w3.org/2000/svg">
+        <!-- pipes -->
+        <path class="pipe" id="pipe1" d="M205 60 C 290 60, 300 60, 385 60"/>
+        <path class="pipe" id="pipe2" d="M205 130 C 290 130, 300 130, 385 95"/>
+        <path class="pipe" id="pipe3" d="M595 78 C 680 78, 690 60, 775 60"/>
+        <path class="pipe" id="pipe4" d="M595 95 C 680 95, 690 130, 775 130"/>
+        <!-- nodes -->
+        <g>
+          <rect class="node-box" x="65" y="35" width="140" height="50" rx="12"/>
+          <text class="node-lbl" x="84" y="57">Banking Core</text>
+          <text class="node-sub" x="84" y="73">20M+ txn / day</text>
+          <rect class="node-box" x="65" y="105" width="140" height="50" rx="12"/>
+          <text class="node-lbl" x="84" y="127">SAP / ERP</text>
+          <text class="node-sub" x="84" y="143">logistics &amp; ops</text>
+        </g>
+        <g>
+          <rect class="node-box" x="385" y="48" width="210" height="78" rx="14"/>
+          <text class="node-lbl" x="408" y="78">Medallion Lakehouse</text>
+          <text class="node-sub" x="408" y="96">bronze → silver → gold · validated</text>
+          <circle cx="572" cy="64" r="4" fill="#0d9d6f"/>
+        </g>
+        <g>
+          <rect class="node-box" x="775" y="35" width="160" height="50" rx="12"/>
+          <text class="node-lbl" x="795" y="57">Analytics &amp; BI</text>
+          <text class="node-sub" x="795" y="73">fresh · governed</text>
+          <rect class="node-box" x="775" y="105" width="160" height="50" rx="12"/>
+          <text class="node-lbl" x="795" y="127">ML &amp; AI Platforms</text>
+          <text class="node-sub" x="795" y="143">model-ready data</text>
+        </g>
+        <!-- packets -->
+        <circle class="packet" r="4"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#pipe1"/></animateMotion></circle>
+        <circle class="packet v" r="4"><animateMotion dur="3.8s" begin="1s" repeatCount="indefinite"><mpath href="#pipe2"/></animateMotion></circle>
+        <circle class="packet g" r="4"><animateMotion dur="3.4s" begin=".5s" repeatCount="indefinite"><mpath href="#pipe3"/></animateMotion></circle>
+        <circle class="packet" r="4"><animateMotion dur="4s" begin="1.4s" repeatCount="indefinite"><mpath href="#pipe4"/></animateMotion></circle>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- STACK STRIP -->
+<div class="strip">
+  <div class="strip-label">Working across the modern data stack</div>
+  <div class="strip-row">
+    <div class="strip-track" id="stripTrack"></div>
+  </div>
+</div>
+
+<!-- ════════════ NUMBERS BAND ════════════ -->
+<section id="numbers">
+  <div class="wrap">
+    <div class="story-head" style="margin-bottom:56px;">
+      <div class="eyebrow"><i class="bi bi-graph-up-arrow"></i> A decade in numbers</div>
+      <h2 class="sec-title">Scale you can<br><span class="grad">measure</span></h2>
+    </div>
+    <div class="num-band">
+      <div class="num-cell spot">
+        <div class="giant"><span data-count="20">0</span>M+</div>
+        <div class="nk">Daily transactions</div>
+        <div class="nd">Financial data flows owned end-to-end, every day, with zero tolerance for loss.</div>
+        <i class="bi bi-arrow-left-right watermark"></i>
+      </div>
+      <div class="num-cell spot">
+        <div class="giant"><span data-count="30">0</span>M+</div>
+        <div class="nk">Banking users</div>
+        <div class="nd">A systemic bank with 3,000+ branches depending on the platform around the clock.</div>
+        <i class="bi bi-people watermark"></i>
+      </div>
+      <div class="num-cell spot">
+        <div class="giant"><span data-count="40">0</span>%</div>
+        <div class="nk">Fewer incidents</div>
+        <div class="nd">Automation and validation pipelines that cut data-related production incidents.</div>
+        <i class="bi bi-shield-check watermark"></i>
+      </div>
+      <div class="num-cell spot">
+        <div class="giant">24/7</div>
+        <div class="nk">Production uptime</div>
+        <div class="nd">Mission-critical operations with proactive observability — boring at 3AM, by design.</div>
+        <i class="bi bi-clock-history watermark"></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ ABOUT ════════════ -->
+<section id="about">
+  <div class="wrap">
+    <div class="story-head">
+      <div class="eyebrow"><i class="bi bi-book"></i> The story</div>
+      <h2 class="sec-title">A decade of systems<br>that <span class="grad">cannot fail</span></h2>
+    </div>
+
+    <p class="manifesto" id="manifesto">
+      For nearly a decade I worked inside a <span class="hl">systemic bank</span> — 3,000+ branches, 30M+ users, 20M+ transactions a day — where a broken pipeline isn't a bug ticket, it's a <span class="hl">front-page incident.</span> That environment shaped how I build: <span class="hl">automated, observable, and reliably boring at 3AM.</span> Today I bring that production-first DNA to cloud-native Lakehouse platforms and modern DataOps.
+    </p>
+
+    <div class="pillars">
+      <div class="card pillar spot">
+        <div class="pillar-icon"><i class="bi bi-shield-check"></i></div>
+        <h3>Zero data loss</h3>
+        <p>Owned financial data flows where loss tolerance was exactly zero — accuracy and freshness for 20M+ daily transactions, 24/7.</p>
+      </div>
+      <div class="card pillar spot">
+        <div class="pillar-icon"><i class="bi bi-arrow-repeat"></i></div>
+        <h3>Automate everything</h3>
+        <p>Airflow, Jenkins, and Git pipelines with robust validation — manual effort and production incidents reduced by 40%+.</p>
+      </div>
+      <div class="card pillar spot">
+        <div class="pillar-icon"><i class="bi bi-activity"></i></div>
+        <h3>Observe before it breaks</h3>
+        <p>Prometheus, Grafana, and Splunk wired into lineage and alerting — incidents resolved before users ever notice.</p>
+      </div>
+      <div class="card pillar spot">
+        <div class="pillar-icon"><i class="bi bi-boxes"></i></div>
+        <h3>Cloud-native by default</h3>
+        <p>Workloads shifted to Kubernetes across VM infrastructure and AWS — provisioned with Terraform and Ansible.</p>
+      </div>
+    </div>
+
+    <div class="story-meta">
+      <span class="meta-chip"><i class="bi bi-briefcase"></i> Banking · Retail · Energy</span>
+      <span class="meta-chip"><i class="bi bi-geo-alt"></i> Aarhus, Denmark</span>
+      <span class="meta-chip"><i class="bi bi-clock-history"></i> Mission-critical · 24/7</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ EXPERIENCE ════════════ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="xp-head">
+      <div>
+        <div class="eyebrow"><i class="bi bi-briefcase"></i> Experience</div>
+        <h2 class="sec-title" style="margin-bottom:0;">Where scale<br>was <span class="grad">real</span></h2>
+      </div>
+      <p class="sec-lead" style="max-width:380px;">Two environments, one common thread: production data that businesses depend on every minute.</p>
+    </div>
+
+    <div class="xp-stack">
+    <!-- CARD 1 -->
+    <article class="xp-card spot">
+      <div class="xp-top">
+        <div class="xp-glyph bank"><i class="bi bi-bank2"></i></div>
+        <div class="xp-co">Novin Hi-Tech Solutions
+          <small>Agri-Bank — Finance Domain</small>
+        </div>
+        <div class="xp-when">
+          <div class="xp-period">Nov 2015 — Aug 2024</div>
+          <span class="xp-mode ft">Full-time · 8.8 years</span>
+        </div>
+      </div>
+      <div class="xp-role"><i class="bi bi-person-badge"></i> Data Platform Engineer — 24/7 production environment</div>
+      <div class="xp-scale">
+        <div class="xp-scale-cell"><div class="xp-scale-num c1">30M+</div><div class="xp-scale-lbl">Users</div></div>
+        <div class="xp-scale-cell"><div class="xp-scale-num c2">20M+</div><div class="xp-scale-lbl">Daily transactions</div></div>
+        <div class="xp-scale-cell"><div class="xp-scale-num c1">3,000+</div><div class="xp-scale-lbl">Branches</div></div>
+        <div class="xp-scale-cell"><div class="xp-scale-num c3">−40%</div><div class="xp-scale-lbl">Incidents</div></div>
+        <div class="xp-scale-cell"><div class="xp-scale-num c2">24/7</div><div class="xp-scale-lbl">Uptime</div></div>
+      </div>
+      <div class="xp-body">
+        <div class="xp-grid">
+          <div class="xp-item">
+            <div class="xp-check"><i class="bi bi-check-lg"></i></div>
+            <div><h4>Time-critical data operations</h4>
+            <p>Owned large-scale financial data flows in 24/7 production with zero tolerance for data loss — high accuracy and freshness at 20M+ daily transactions.</p></div>
+          </div>
+          <div class="xp-item">
+            <div class="xp-check"><i class="bi bi-check-lg"></i></div>
+            <div><h4>SQL &amp; Medallion engineering</h4>
+            <p>Designed and optimized complex SQL/Python workflows, schemas, and Medallion architecture components — reducing query latency across core systems.</p></div>
+          </div>
+          <div class="xp-item">
+            <div class="xp-check"><i class="bi bi-check-lg"></i></div>
+            <div><h4>Data automation &amp; CI/CD</h4>
+            <p>Automated pipelines and validation checks via Airflow, Jenkins, and Git — manual effort and production incidents down 40%+.</p></div>
+          </div>
+          <div class="xp-item">
+            <div class="xp-check"><i class="bi bi-check-lg"></i></div>
+            <div><h4>Containerized infrastructure</h4>
+            <p>Shifted data workloads to Kubernetes across VM-based infrastructure and AWS Cloud, using Ansible and Terraform for resilient operations.</p></div>
+          </div>
+          <div class="xp-item">
+            <div class="xp-check"><i class="bi bi-check-lg"></i></div>
+            <div><h4>Production observability</h4>
+            <p>Proactive monitoring, lineage tracking, and alerting via Prometheus, Grafana, and Splunk — shorter resolution times, strict quality standards.</p></div>
+          </div>
+          <div class="xp-item">
+            <div class="xp-check"><i class="bi bi-check-lg"></i></div>
+            <div><h4>Database architecture</h4>
+            <p>Deep optimization and schema management across MS SQL, PostgreSQL, and Oracle in multi-tenant, production-level environments.</p></div>
+          </div>
+        </div>
+        <div class="xp-tech">
+          <span class="xp-pill">SQL Server</span><span class="xp-pill">PostgreSQL</span><span class="xp-pill">Oracle</span>
+          <span class="xp-pill">Python</span><span class="xp-pill">Airflow</span><span class="xp-pill">Jenkins</span>
+          <span class="xp-pill">Kubernetes</span><span class="xp-pill">Docker</span><span class="xp-pill">AWS</span>
+          <span class="xp-pill">Terraform</span><span class="xp-pill">Ansible</span><span class="xp-pill">Prometheus</span>
+          <span class="xp-pill">Grafana</span><span class="xp-pill">Splunk</span><span class="xp-pill">Git</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- CARD 2 -->
+    <article class="xp-card spot">
+      <div class="xp-top">
+        <div class="xp-glyph fmcg"><i class="bi bi-box-seam"></i></div>
+        <div class="xp-co">Zarrin Roya Co
+          <small>Leading FMCG Manufacturer — SAP Infrastructure</small>
+        </div>
+        <div class="xp-when">
+          <div class="xp-period">Sep 2024 — Present</div>
+          <span class="xp-mode fl">Freelance · Remote</span>
+        </div>
+      </div>
+      <div class="xp-role"><i class="bi bi-person-badge"></i> Data Platform Engineer — remote engagement</div>
+      <div class="xp-scale four">
+        <div class="xp-scale-cell"><div class="xp-scale-num c1">1,000+</div><div class="xp-scale-lbl">Employees</div></div>
+        <div class="xp-scale-cell"><div class="xp-scale-num c2">20+</div><div class="xp-scale-lbl">Logistics hubs</div></div>
+        <div class="xp-scale-cell"><div class="xp-scale-num c3">60%</div><div class="xp-scale-lbl">Market share</div></div>
+        <div class="xp-scale-cell"><div class="xp-scale-num c1">SAP</div><div class="xp-scale-lbl">Enterprise core</div></div>
+      </div>
+      <div class="xp-body">
+        <div class="xp-grid">
+          <div class="xp-item">
+            <div class="xp-check"><i class="bi bi-check-lg"></i></div>
+            <div><h4>Industrial data pipelines</h4>
+            <p>Built and optimized robust ETL/ELT pipelines moving large-scale production and logistics data from SAP into central data environments with high reliability.</p></div>
+          </div>
+          <div class="xp-item">
+            <div class="xp-check"><i class="bi bi-check-lg"></i></div>
+            <div><h4>Backend &amp; API integration</h4>
+            <p>Integrated backend components with ORM and scripting to streamline daily operational reporting and inventory tracking processes.</p></div>
+          </div>
+          <div class="xp-item">
+            <div class="xp-check"><i class="bi bi-check-lg"></i></div>
+            <div><h4>Data automation</h4>
+            <p>Automated extraction and transformation with SQL and scripting — manual operational workload significantly reduced.</p></div>
+          </div>
+          <div class="xp-item">
+            <div class="xp-check"><i class="bi bi-check-lg"></i></div>
+            <div><h4>Operational reliability</h4>
+            <p>Timely, consistent data availability for supply-chain processes across 20+ logistics hubs nationwide.</p></div>
+          </div>
+        </div>
+        <div class="xp-tech">
+          <span class="xp-pill">SAP</span><span class="xp-pill">ETL/ELT</span><span class="xp-pill">SQL</span>
+          <span class="xp-pill">Python</span><span class="xp-pill">FastAPI</span><span class="xp-pill">ORM</span>
+          <span class="xp-pill">Node.js</span><span class="xp-pill">Supply-chain data</span>
+        </div>
+      </div>
+    </article>
+    </div>
+  </div>
+</section>
+
+<!-- EDITORIAL MARQUEE -->
+<div class="editorial-marquee" aria-hidden="true">
+  <div class="em-track">
+    <span class="em-item">Zero data loss <span class="em-dot"></span></span>
+    <span class="em-item solid">20M+ daily transactions <span class="em-dot"></span></span>
+    <span class="em-item">24/7 production <span class="em-dot"></span></span>
+    <span class="em-item">Medallion architecture <span class="em-dot"></span></span>
+    <span class="em-item">Zero data loss <span class="em-dot"></span></span>
+    <span class="em-item solid">20M+ daily transactions <span class="em-dot"></span></span>
+    <span class="em-item">24/7 production <span class="em-dot"></span></span>
+    <span class="em-item">Medallion architecture <span class="em-dot"></span></span>
+  </div>
+</div>
+
+<!-- ════════════ SKILLS ════════════ -->
+<section id="skills">
+  <div class="wrap">
+    <div class="story-head">
+      <div class="eyebrow"><i class="bi bi-stack"></i> Expertise</div>
+      <h2 class="sec-title">Full-stack<br><span class="grad">data platform</span> skills</h2>
+      <p class="sec-lead" style="margin:0 auto;">From pipeline architecture to cloud orchestration — the entire modern data platform, end to end.</p>
+    </div>
+
+    <div class="skill-rows">
+      <div class="skill-row">
+        <div class="skill-row-num">/ 01</div>
+        <div class="skill-row-name">
+          <div class="skill-icon"><i class="bi bi-diagram-3"></i></div>
+          <div><h3>Data Engineering</h3><span>Pipelines · Lakehouse · Medallion</span></div>
+        </div>
+        <div class="skill-chips">
+          <span class="chip"><i class="bi bi-database"></i>SQL</span>
+          <span class="chip"><i class="fab fa-python"></i>Python</span>
+          <span class="chip"><i class="bi bi-arrow-left-right"></i>ETL / ELT</span>
+          <span class="chip"><i class="bi bi-layers"></i>Medallion Architecture</span>
+          <span class="chip"><i class="bi bi-grid-3x3-gap"></i>Lakehouse</span>
+          <span class="chip"><i class="bi bi-collection"></i>Batch Processing</span>
+          <span class="chip"><i class="bi bi-graph-up"></i>Streaming</span>
+          <span class="chip"><i class="bi bi-bezier2"></i>Data Pipelines</span>
+          <span class="chip"><i class="bi bi-diagram-2"></i>Data Modeling</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-num">/ 02</div>
+        <div class="skill-row-name">
+          <div class="skill-icon"><i class="bi bi-cloud"></i></div>
+          <div><h3>Cloud Platforms</h3><span>Azure · AWS · Modern data</span></div>
+        </div>
+        <div class="skill-chips">
+          <span class="chip"><i class="bi bi-microsoft"></i>Azure</span>
+          <span class="chip"><i class="fab fa-aws"></i>AWS</span>
+          <span class="chip"><i class="fab fa-google"></i>GCP</span>
+          <span class="chip"><i class="bi bi-cloud"></i>Databricks</span>
+          <span class="chip"><i class="bi bi-snow"></i>Snowflake</span>
+          <span class="chip"><i class="bi bi-hdd-network"></i>ADLS</span>
+          <span class="chip"><i class="bi bi-archive"></i>Blob Storage</span>
+          <span class="chip"><i class="bi bi-bucket"></i>S3</span>
+          <span class="chip"><i class="bi bi-wind"></i>Apache Airflow</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-num">/ 03</div>
+        <div class="skill-row-name">
+          <div class="skill-icon"><i class="bi bi-boxes"></i></div>
+          <div><h3>Platform Engineering</h3><span>IaC · Containers · Linux</span></div>
+        </div>
+        <div class="skill-chips">
+          <span class="chip"><i class="bi bi-boxes"></i>Kubernetes</span>
+          <span class="chip"><i class="fab fa-docker"></i>Docker</span>
+          <span class="chip"><i class="bi bi-server"></i>Terraform</span>
+          <span class="chip"><i class="bi bi-gear"></i>Ansible</span>
+          <span class="chip"><i class="fab fa-linux"></i>Linux</span>
+          <span class="chip"><i class="bi bi-patch-check"></i>LPIC</span>
+          <span class="chip"><i class="bi bi-code-slash"></i>Bash</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-num">/ 04</div>
+        <div class="skill-row-name">
+          <div class="skill-icon"><i class="bi bi-shield-check"></i></div>
+          <div><h3>DataOps &amp; Reliability</h3><span>CI/CD · Observability · Quality</span></div>
+        </div>
+        <div class="skill-chips">
+          <span class="chip"><i class="bi bi-git"></i>Git</span>
+          <span class="chip"><i class="bi bi-arrow-repeat"></i>CI/CD</span>
+          <span class="chip"><i class="fab fa-jenkins"></i>Jenkins</span>
+          <span class="chip"><i class="bi bi-activity"></i>Prometheus</span>
+          <span class="chip"><i class="bi bi-bar-chart"></i>Grafana</span>
+          <span class="chip"><i class="bi bi-search"></i>Splunk</span>
+          <span class="chip"><i class="bi bi-shield-check"></i>Data Quality</span>
+          <span class="chip"><i class="bi bi-signpost-split"></i>Data Lineage</span>
+          <span class="chip"><i class="bi bi-binoculars"></i>Monitoring</span>
+          <span class="chip"><i class="bi bi-bell"></i>Alerting</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-num">/ 05</div>
+        <div class="skill-row-name">
+          <div class="skill-icon"><i class="bi bi-database-gear"></i></div>
+          <div><h3>Databases</h3><span>OLTP · OLAP · Multi-tenant</span></div>
+        </div>
+        <div class="skill-chips">
+          <span class="chip"><i class="bi bi-database"></i>SQL Server</span>
+          <span class="chip"><i class="bi bi-database-check"></i>PostgreSQL</span>
+          <span class="chip"><i class="bi bi-database-gear"></i>Oracle Database</span>
+          <span class="chip"><i class="bi bi-diagram-3"></i>Multi-Tenancy</span>
+          <span class="chip"><i class="bi bi-table"></i>Schema Design</span>
+          <span class="chip"><i class="bi bi-speedometer2"></i>Query Optimization</span>
+          <span class="chip"><i class="bi bi-lightning-charge"></i>Performance Tuning</span>
+          <span class="chip"><i class="bi bi-arrow-repeat"></i>OLTP</span>
+          <span class="chip"><i class="bi bi-bar-chart-line"></i>OLAP</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-row-num">/ 06</div>
+        <div class="skill-row-name">
+          <div class="skill-icon"><i class="bi bi-cpu"></i></div>
+          <div><h3>Backend Engineering</h3><span>APIs · Integration · Agile</span></div>
+        </div>
+        <div class="skill-chips">
+          <span class="chip"><i class="bi bi-cpu"></i>FastAPI</span>
+          <span class="chip"><i class="fab fa-node-js"></i>Node.js</span>
+          <span class="chip"><i class="bi bi-link-45deg"></i>ORMs</span>
+          <span class="chip"><i class="bi bi-plug"></i>API Integration</span>
+          <span class="chip"><i class="bi bi-hdd-stack"></i>Backend Services</span>
+          <span class="chip"><i class="bi bi-kanban"></i>Agile Collaboration</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ CERTS ════════════ -->
+<section id="certs">
+  <div class="wrap">
+    <div class="story-head">
+      <div class="eyebrow green"><i class="bi bi-patch-check"></i> Credentials</div>
+      <h2 class="sec-title">Validated by<br>the <span class="grad">industry</span></h2>
+    </div>
+    <div class="cert-grid">
+      <div class="card cert spot">
+        <div class="cert-top"><div class="cert-glyph"><i class="bi bi-award"></i></div><span class="cert-yr">2023</span></div>
+        <h3>IBM Data Science Professional</h3>
+        <div class="issuer">IBM — Professional Certificate</div>
+        <div class="cert-tags"><span>Python</span><span>SQL</span><span>Data Analysis</span><span>Visualization</span><span>ML</span><span>Capstone</span></div>
+      </div>
+      <div class="card cert spot">
+        <div class="cert-top"><div class="cert-glyph"><i class="bi bi-microsoft"></i></div><span class="cert-yr">Microsoft</span></div>
+        <h3>Azure Administrator Associate</h3>
+        <div class="issuer">Microsoft Certified</div>
+        <div class="cert-tags"><span>Azure</span><span>Cloud Infra</span><span>IAM</span><span>Networking</span><span>Storage</span></div>
+      </div>
+      <div class="card cert spot">
+        <div class="cert-top"><div class="cert-glyph"><i class="bi bi-cloud-check"></i></div><span class="cert-yr">2024</span></div>
+        <h3>OCI Architect Professional</h3>
+        <div class="issuer">Oracle Cloud Infrastructure</div>
+        <div class="cert-tags"><span>Architecture</span><span>Security</span><span>Networking</span></div>
+      </div>
+      <div class="card cert spot">
+        <div class="cert-top"><div class="cert-glyph"><i class="bi bi-database"></i></div><span class="cert-yr">Databases</span></div>
+        <h3>Database Certifications</h3>
+        <div class="issuer">Microsoft · Oracle · EDB</div>
+        <div class="cert-tags"><span>SQL Server 2022</span><span>Oracle 19c</span><span>PostgreSQL (EDB)</span></div>
+      </div>
+      <div class="card cert spot">
+        <div class="cert-top"><div class="cert-glyph"><i class="fab fa-linux"></i></div><span class="cert-yr">LPI</span></div>
+        <h3>Linux &amp; Platform Foundations</h3>
+        <div class="issuer">LPIC-1 · LPIC-2 · DevOps</div>
+        <div class="cert-tags"><span>LPIC-1</span><span>LPIC-2</span><span>DevOps Courses</span><span>Bash</span></div>
+      </div>
+      <div class="card cert spot">
+        <div class="cert-top"><div class="cert-glyph"><i class="bi bi-broadcast"></i></div><span class="cert-yr">Ops</span></div>
+        <h3>Monitoring Systems</h3>
+        <div class="issuer">Platform &amp; Automation Foundations</div>
+        <div class="cert-tags"><span>Zabbix</span><span>Monitoring</span><span>Automation</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ EDUCATION ════════════ -->
+<section id="education">
+  <div class="wrap">
+    <div class="story-head">
+      <div class="eyebrow"><i class="bi bi-mortarboard"></i> Foundation</div>
+      <h2 class="sec-title">Education &amp;<br><span class="grad">languages</span></h2>
+    </div>
+    <div class="edu-grid">
+      <div class="card edu-card spot">
+        <div class="edu-glyph"><i class="bi bi-mortarboard"></i></div>
+        <div>
+          <div class="edu-years">2013 — 2015</div>
+          <div class="edu-deg">Master of Business Administration</div>
+          <p class="edu-note">MBA — bridging engineering and business strategy.</p>
+        </div>
+      </div>
+      <div class="card edu-card spot">
+        <div class="edu-glyph"><i class="bi bi-cpu"></i></div>
+        <div>
+          <div class="edu-years">2006 — 2010</div>
+          <div class="edu-deg">Bachelor of ICT Engineering</div>
+          <p class="edu-note">Information &amp; Communication Technology.</p>
+        </div>
+      </div>
+    </div>
+    <div class="langs">
+      <div class="card lang">
+        <span class="lang-flag">🇬🇧</span>
+        <div><div class="lang-name">English</div><div class="lang-lvl">Full professional proficiency</div></div>
+        <div class="lang-meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+      </div>
+      <div class="card lang">
+        <span class="lang-flag">🇩🇰</span>
+        <div><div class="lang-name">Danish</div><div class="lang-lvl">Intermediate · Dansk 3</div></div>
+        <div class="lang-meter"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="card lang">
+        <span class="lang-flag">🇮🇷</span>
+        <div><div class="lang-name">Persian</div><div class="lang-lvl">Native</div></div>
+        <div class="lang-meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ CONTACT ════════════ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-card">
+      <div class="contact-eyebrow"><i class="bi bi-send"></i> Get in touch</div>
+      <h2 class="contact-title">Let's build something<br>that doesn't break.</h2>
+      <p class="contact-sub">Open to senior data platform roles. If your data infrastructure needs to be reliable, observable, and built for scale — let's talk.</p>
+      <div class="contact-actions">
+        <span class="magnetic"><a href="mailto:soheilmoosavi@outlook.dk" class="btn-white"><i class="bi bi-envelope"></i> soheilmoosavi@outlook.dk</a></span>
+        <span class="magnetic"><a href="https://linkedin.com/in/soheil-moosavi" target="_blank" rel="noopener" class="btn-outline"><i class="bi bi-linkedin"></i> LinkedIn</a></span>
+      </div>
+      <div class="contact-cells">
+        <a href="tel:+4550150050" class="contact-cell">
+          <div class="cc-label"><i class="bi bi-phone"></i> Phone</div>
+          <div class="cc-value">+45 50 15 00 50</div>
+        </a>
+        <a href="https://linkedin.com/in/soheil-moosavi" target="_blank" rel="noopener" class="contact-cell">
+          <div class="cc-label"><i class="bi bi-linkedin"></i> LinkedIn</div>
+          <div class="cc-value">/in/soheil-moosavi</div>
+        </a>
+        <div class="contact-cell">
+          <div class="cc-label"><i class="bi bi-geo-alt"></i> Location</div>
+          <div class="cc-value">Aarhus, Denmark <span id="localTime" style="font-size:12px; color:rgba(255,255,255,0.5); font-family:var(--font-body); font-weight:500;"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span><b>Soheil Moosavi</b> — Data Platform Engineer</span>
+    <span>Designed &amp; engineered · 2026</span>
+  </div>
+  <div class="brand-giant-row" aria-hidden="true">
+    <div class="brand-giant">
+      <span>SOHEIL&nbsp;MOOSAVI</span><span class="ghost">DATA&nbsp;PLATFORM</span>
+      <span>SOHEIL&nbsp;MOOSAVI</span><span class="ghost">DATA&nbsp;PLATFORM</span>
+    </div>
+  </div>
+</footer>
+
+<a href="#hero" class="totop" id="totop"><i class="bi bi-arrow-up"></i></a>
+
+<!-- LIBS -->
+<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+
+<script>
+/* ═══════ LOADER ═══════ */
+(function(){
+  const fill = document.getElementById('loadFill');
+  let n = 0;
+  const iv = setInterval(() => {
+    n += Math.floor(Math.random()*14)+6;
+    if (n>=100){ n=100; clearInterval(iv); }
+    fill.style.width = n+'%';
+  }, 80);
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('done');
+      initAll();
+    }, 1200);
+  });
+})();
+
+function initAll(){
+  initLenis(); initNav(); initProgress(); initTyped(); initStrip();
+  initGSAP(); initCounters(); initManifesto(); initClock(); initToTop();
+  initSpotlight(); initMagnetic(); initTilt(); initPipelineLog(); initCursor();
+}
+
+/* ═══════ LENIS SMOOTH SCROLL ═══════ */
+function initLenis(){
+  if (!window.Lenis || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.style.scrollBehavior = 'auto';
+  const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target){ e.preventDefault(); lenis.scrollTo(target, { offset: -90 }); }
+    });
+  });
+}
+
+/* ═══════ CUSTOM CURSOR ═══════ */
+function initCursor(){
+  if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches || innerWidth < 992) return;
+  const dot = document.querySelector('.cursor-dot');
+  const ring = document.querySelector('.cursor-ring');
+  let mx=innerWidth/2, my=innerHeight/2, rx=mx, ry=my;
+  addEventListener('mousemove', e=>{
+    mx=e.clientX; my=e.clientY;
+    dot.style.left=mx+'px'; dot.style.top=my+'px';
+  }, {passive:true});
+  gsap.ticker.add(()=>{
+    rx += (mx-rx)*.16; ry += (my-ry)*.16;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  });
+  const hoverables = 'a, button, .chip, .xp-pill, .strip-item';
+  document.addEventListener('mouseover', e=>{
+    ring.classList.toggle('is-hover', !!e.target.closest(hoverables));
+    ring.classList.toggle('is-dark', !!e.target.closest('.contact-card'));
+  });
+}
+
+/* ═══════ NAV ═══════ */
+function initNav(){
+  const nav = document.getElementById('navbar');
+  addEventListener('scroll', ()=> nav.classList.toggle('scrolled', scrollY>30), {passive:true});
+  nav.classList.toggle('scrolled', scrollY>30);
+}
+
+/* ═══════ PROGRESS ═══════ */
+function initProgress(){
+  const bar = document.getElementById('progress');
+  addEventListener('scroll', ()=>{
+    const h = document.documentElement.scrollHeight - innerHeight;
+    bar.style.width = (scrollY/h*100)+'%';
+  }, {passive:true});
+}
+
+/* ═══════ TYPED ═══════ */
+function initTyped(){
+  new Typed('#typed', {
+    strings: ['Data Platform Engineer','Data Engineer','Cloud Data Engineer','Data Reliability Engineer','Platform Engineer'],
+    typeSpeed:50, backSpeed:26, backDelay:2100, loop:true, smartBackspace:true
+  });
+}
+
+/* ═══════ STACK STRIP ═══════ */
+function initStrip(){
+  const items = [
+    ['bi bi-cloud','Databricks'], ['bi bi-snow','Snowflake'], ['bi bi-wind','Apache Airflow'],
+    ['bi bi-boxes','Kubernetes'], ['fab fa-docker','Docker'], ['bi bi-server','Terraform'],
+    ['fab fa-aws','AWS'], ['bi bi-microsoft','Azure'], ['bi bi-database','PostgreSQL'],
+    ['fab fa-python','Python'], ['bi bi-git','Git'], ['bi bi-activity','Prometheus']
+  ];
+  const el = document.getElementById('stripTrack');
+  const html = items.map(([ic,t])=>`<span class="strip-item"><i class="${ic}"></i>${t}</span>`).join('');
+  el.innerHTML = html + html;
+}
+
+/* ═══════ SPOTLIGHT (cursor-tracked card glow) ═══════ */
+function initSpotlight(){
+  document.querySelectorAll('.spot').forEach(card=>{
+    card.addEventListener('mousemove', e=>{
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left)+'px');
+      card.style.setProperty('--my', (e.clientY - r.top)+'px');
+    });
+  });
+}
+
+/* ═══════ MAGNETIC BUTTONS ═══════ */
+function initMagnetic(){
+  if (window.matchMedia('(hover:none)').matches) return;
+  document.querySelectorAll('.magnetic').forEach(m=>{
+    const strength = 22;
+    m.addEventListener('mousemove', e=>{
+      const r = m.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width/2;
+      const y = e.clientY - r.top - r.height/2;
+      gsap.to(m, { x: x/r.width*strength, y: y/r.height*strength, duration:.4, ease:'power3.out' });
+    });
+    m.addEventListener('mouseleave', ()=> gsap.to(m, { x:0, y:0, duration:.6, ease:'elastic.out(1,0.4)' }));
+  });
+}
+
+/* ═══════ 3D TILT PORTRAIT ═══════ */
+function initTilt(){
+  if (window.matchMedia('(hover:none)').matches) return;
+  const card = document.getElementById('tiltCard');
+  const wrapEl = card.parentElement;
+  wrapEl.addEventListener('mousemove', e=>{
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left)/r.width - .5;
+    const py = (e.clientY - r.top)/r.height - .5;
+    gsap.to(card, { rotationY: px*8, rotationX: -py*8, transformPerspective:1100, duration:.5, ease:'power2.out' });
+  });
+  wrapEl.addEventListener('mouseleave', ()=> gsap.to(card, { rotationY:0, rotationX:0, duration:.8, ease:'elastic.out(1,0.5)' }));
+}
+
+/* ═══════ PIPELINE LOG (light terminal, line-by-line) ═══════ */
+function initPipelineLog(){
+  const body = document.getElementById('plLog');
+  const lines = [
+    {h:'<span class="c-blue">$</span> <span class="c-cmd">airflow dags trigger core_financial_etl</span>', d:420},
+    {h:'<span class="c-dim">[scheduler]</span> <span class="c-blue">dag=core_financial_etl</span> <span class="c-dim">queued</span>', d:520},
+    {h:'<span class="c-dim">[worker-04]</span> extract: <span class="c-cyan" id="rowsTicker">20,114,382</span> <span class="c-dim">rows ·</span> <span class="c-green">0 dropped</span>', d:600},
+    {h:'<span class="c-dim">[worker-04]</span> validate: schema <span class="c-green">✓</span> freshness <span class="c-green">✓</span> lineage <span class="c-green">✓</span>', d:560},
+    {h:'<span class="c-dim">[worker-04]</span> load → medallion/<span class="c-gold">gold</span> <span class="c-dim">· latency</span> <span class="c-cmd">1.8s</span>', d:560},
+    {h:'<span class="c-green">✓ pipeline green</span> <span class="c-dim">— incidents today:</span> <span class="c-green">0</span>', d:600},
+    {h:'<span class="c-blue">$</span> <span class="c-dim">uptime —</span> <span class="c-green">24/7, as always</span>', d:500},
+  ];
+  let i = 0;
+  function next(){
+    if (i >= lines.length){ startTicker(); return; }
+    const ln = document.createElement('span');
+    ln.className = 'pl-ln'; ln.innerHTML = lines[i].h;
+    ln.style.opacity = '0'; ln.style.transform = 'translateY(6px)';
+    ln.style.transition = 'opacity .4s, transform .4s';
+    body.appendChild(ln);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ ln.style.opacity='1'; ln.style.transform='none'; }));
+    i++;
+    setTimeout(next, lines[i-1].d);
+  }
+  function startTicker(){
+    const el = document.getElementById('rowsTicker');
+    if (!el) return;
+    let base = 20114382;
+    setInterval(()=>{
+      base += Math.floor(Math.random()*40)+8;
+      el.textContent = base.toLocaleString('en-US');
+    }, 1800);
+  }
+  setTimeout(next, 900);
+}
+
+/* ═══════ GSAP ═══════ */
+function initGSAP(){
+  gsap.registerPlugin(ScrollTrigger);
+
+  // hero mask-line kinetic reveal
+  gsap.to({}, {duration:0}); // ensure gsap loaded
+  gsap.from('.hero-h1 .mask-line > span', {
+    yPercent: 115, skewY: 5, duration: 1.2, stagger: .13, ease: 'power4.out', delay: .15
+  });
+  // scribble draw
+  gsap.to('#scribblePath', { strokeDashoffset: 0, duration: 1.1, ease:'power2.inOut', delay: 1.1 });
+
+  gsap.utils.toArray('.reveal-up').forEach((el,i)=>{
+    gsap.from(el, { y:44, opacity:0, duration:1, ease:'power3.out', delay:.25+i*.1 });
+  });
+
+  gsap.utils.toArray('.story-head, .xp-head, .flow-svg-wrap').forEach(el=>{
+    gsap.from(el, { y:36, opacity:0, duration:.85, ease:'power3.out',
+      scrollTrigger:{ trigger:el, start:'top 85%' } });
+  });
+
+  gsap.from('.num-cell', { y:50, opacity:0, duration:.8, stagger:.1, ease:'power3.out',
+    scrollTrigger:{ trigger:'.num-band', start:'top 80%' } });
+
+  gsap.from('.pillar', { y:40, opacity:0, duration:.7, stagger:.1, ease:'power3.out',
+    scrollTrigger:{ trigger:'.pillars', start:'top 82%' } });
+
+  gsap.utils.toArray('.xp-card').forEach(el=>{
+    gsap.from(el, { y:56, opacity:0, duration:.9, ease:'power3.out',
+      scrollTrigger:{ trigger:el, start:'top 84%' } });
+  });
+
+  gsap.from('.skill-row', { y:36, opacity:0, duration:.7, stagger:.09, ease:'power3.out',
+    scrollTrigger:{ trigger:'.skill-rows', start:'top 82%' } });
+
+  // sticky stack: first card recedes only once the second is actually arriving,
+  // and stays legible (mild scale/fade) so content can still be read mid-transition
+  if (window.matchMedia('(min-width:992px)').matches) {
+    const cards = gsap.utils.toArray('.xp-stack .xp-card');
+    if (cards.length === 2) {
+      gsap.to(cards[0], {
+        scale:.965, opacity:.8, transformOrigin:'center top', ease:'none',
+        scrollTrigger:{ trigger:cards[1], start:'top 85%', end:'top 128px', scrub:true }
+      });
+    }
+  }
+
+  // editorial marquee drifts slightly faster while scrolling
+  gsap.to('.em-track', { xPercent:-8, ease:'none',
+    scrollTrigger:{ trigger:'.editorial-marquee', start:'top bottom', end:'bottom top', scrub:true } });
+
+  gsap.from('.cert', { y:40, opacity:0, duration:.65, stagger:.08, ease:'power3.out',
+    scrollTrigger:{ trigger:'.cert-grid', start:'top 82%' } });
+
+  gsap.utils.toArray('.edu-card, .lang, .meta-chip').forEach(el=>{
+    gsap.from(el, { y:26, opacity:0, duration:.6, ease:'power3.out',
+      scrollTrigger:{ trigger:el, start:'top 92%' } });
+  });
+
+  gsap.from('.contact-card', { y:60, opacity:0, duration:1, ease:'power3.out',
+    scrollTrigger:{ trigger:'#contact', start:'top 80%' } });
+
+  // brand giant slides with scroll
+  gsap.from('.brand-giant', { yPercent:40, opacity:0, duration:1, ease:'power3.out',
+    scrollTrigger:{ trigger:'footer', start:'top 92%' } });
+
+  // soft hero parallax
+  gsap.to('.hero-visual', { yPercent:-6, ease:'none',
+    scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub:true } });
+}
+
+/* ═══════ COUNTERS ═══════ */
+function initCounters(){
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    ScrollTrigger.create({
+      trigger:el, start:'top 94%', once:true,
+      onEnter(){
+        const target = parseInt(el.dataset.count);
+        const t0 = performance.now(), dur=1500;
+        (function tick(now){
+          const p = Math.min((now-t0)/dur,1);
+          el.textContent = Math.floor((1-Math.pow(1-p,3))*target);
+          if(p<1) requestAnimationFrame(tick);
+        })(t0);
+      }
+    });
+  });
+}
+
+/* ═══════ MANIFESTO word reveal ═══════ */
+function initManifesto(){
+  const m = document.getElementById('manifesto');
+  function wrapWords(node){
+    [...node.childNodes].forEach(child=>{
+      if (child.nodeType===3){
+        const frag = document.createDocumentFragment();
+        child.textContent.split(/(\s+)/).forEach(tok=>{
+          if(/^\s+$/.test(tok)||tok===''){ frag.appendChild(document.createTextNode(tok)); }
+          else { const s=document.createElement('span'); s.className='w'; s.textContent=tok; frag.appendChild(s); }
+        });
+        node.replaceChild(frag, child);
+      } else if (child.nodeType===1 && !child.classList.contains('hl')) { wrapWords(child); }
+    });
+  }
+  wrapWords(m);
+  const words = m.querySelectorAll('.w');
+  gsap.to(words, {
+    color: '#0f1222', stagger: 0.02, ease:'none',
+    scrollTrigger:{ trigger:m, start:'top 80%', end:'bottom 50%', scrub:true }
+  });
+}
+
+/* ═══════ CLOCK ═══════ */
+function initClock(){
+  const el = document.getElementById('localTime');
+  function tick(){
+    el.textContent = '· ' + new Date().toLocaleTimeString('en-GB',{timeZone:'Europe/Copenhagen',hour:'2-digit',minute:'2-digit'}) + ' CET';
+  }
+  tick(); setInterval(tick, 30000);
+}
+
+/* ═══════ TO TOP ═══════ */
+function initToTop(){
+  const b = document.getElementById('totop');
+  addEventListener('scroll', ()=> b.classList.toggle('show', scrollY>innerHeight), {passive:true});
+}
+</script>
+</body>
+</html>
