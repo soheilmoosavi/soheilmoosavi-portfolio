@@ -421,26 +421,15 @@ section { position:relative; z-index:2; }
 .c-gold { color:#e08c2f; font-weight:600; }
 .c-violet { color:var(--violet); font-weight:500; }
 
-.metric-float {
-  position:absolute; left:-38px; bottom:150px; z-index:2;
-  background:rgba(255,255,255,0.9); backdrop-filter:blur(20px);
-  border:1px solid var(--line); border-radius:16px; padding:16px 22px;
-  box-shadow:var(--shadow-md); animation: floaty 7s ease-in-out 1.2s infinite;
-}
-.metric-float .v { font-family:var(--font-display); font-weight:700; font-size:24px; letter-spacing:-1px; }
-.metric-float .v span { color:var(--emerald); }
-.metric-float .k { font-size:11.5px; color:var(--ink-mute); font-weight:500; }
 @media (min-width:992px){
   #hero{ padding-bottom: 120px; }
 }
 @media (max-width:991px){
   .hero-visual{ display:flex; flex-direction:column; }
   .pipeline-card{ position:relative; left:auto; top:auto; width:min(384px,100%); margin:22px 0 0; animation:none; }
-  .metric-float{ left:-6px; }
 }
 @media (max-width:576px){
   .pipeline-card{ width:100%; }
-  .metric-float{ display:none; }
 }
 
 /* ════════════════ DATA FLOW ILLUSTRATION ════════════════ */
@@ -1032,10 +1021,6 @@ footer { padding: 64px 0 0; overflow:hidden; }
             <span class="pipeline-badge"><i class="bi bi-circle-fill"></i> Healthy</span>
           </div>
           <div class="pipeline-body" id="plLog"></div>
-        </div>
-        <div class="metric-float">
-          <div class="v">−40<span>%</span></div>
-          <div class="k">Production incidents</div>
         </div>
         <a class="hero-cert" href="https://credentials.databricks.com/8a7e0bdb-a2b8-4cfb-8fdb-6a7d744e0399#acc.cRaq45I7" target="_blank" rel="noopener" aria-label="View verified Azure Databricks Platform Architect credential">
           <img src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/188904673" alt="Azure Databricks Platform Architect badge" loading="lazy">
